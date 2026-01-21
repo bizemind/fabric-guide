@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hindi Song Finder (Demo)</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #fafafa;
+      padding: 40px;
+      max-width: 720px;
+      margin: auto;
+    }
+    h1 { font-size: 24px; }
+    input {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      margin: 12px 0;
+    }
+    button {
+      padding: 12px 18px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .result {
+      background: #fff;
+      padding: 16px;
+      margin-top: 16px;
+      border-radius: 6px;
+    }
+    .song-title {
+      font-weight: 600;
+    }
+    .lyrics {
+      font-size: 14px;
+      color: #444;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Hindi Song Finder</h1>
+<p>English phrase → Hindi songs with the same feeling.</p>
+
+<input id="query" placeholder="why are you troubling me" />
+<button onclick="searchSongs()">Search</button>
+
+<div id="results"></div>
+
+<script>
+/* ---------------- FAKE DATABASE ---------------- */
+
+const SONGS = [
+  {
+    title: "Kyun Main Jagoon",
+    artist: "Shankar Mahadevan",
+    snippet: "kyun main jagoon… dard se bhara yeh dil",
+    tags: ["kyun", "dard", "pareshaan", "confusion"]
+  },
+  {
+    title: "Tadap Tadap",
+    artist: "KK",
+    snippet: "tadap tadap ke is dil se aah nikalti rahi",
+    tags: ["tadap", "pain", "suffering"]
+  },
+  {
+    title: "Bewafa",
+    artist: "Imran Khan",
+    snippet: "bewafa se bhi pyaar hota hai",
+    tags: ["betrayal", "pain", "complaint"]
+  },
+  {
+    title: "Tu Jaane Na",
+    artist: "Atif Aslam",
+    snippet: "kaise batayein kyun tujhko chahe",
+    tags: ["kyun", "confusion", "love"]
+  }
+];
+
+/* -------- INTENT EXTRACTION (ENGLISH) ---------- */
+
+function extractIntent(english) {
+  const text = english.toLowerCase();
+
+  const intents = [];
+
+  if (text.includes("why")) intents.push("kyun");
+  if (text.includes("troubl") || text.includes("bother")) intents.push("pareshaan");
+  if (text.includes("hurt") || text.includes("pain")) intents.push("pain");
+  if (text.includes("suffer")) intents.push("tadap");
+
+  return intents;
+}
+
+/* ------------- FAKE SEARCH ENGINE -------------- */
+
+function fakeSearch(query) {
+  const intents = extractIntent(query);
+
+  return SONGS
+    .map(song => {
+      const score = song.tags.filter(t => intents.includes(t)).length;
+      return { ...song, score };
+    })
+    .filter(song => song.score > 0)
+    .sort((a, b) => b.score - a.score);
+}
+
+/* ------------- UI CONTROLLER ------------------- */
+
+function searchSongs() {
+  const query = document.getElementById("query").value.trim();
+  if (!query) return;
+
+  const results = fakeSearch(query);
+  render(results);
+}
+
+function render(results) {
+  const el = document.getElementById("results");
+  el.innerHTML = "";
+
+  if (!results.length) {
+    el.innerHTML = "No close matches found.";
+    return;
+  }
+
+  results.forEach(song => {
+    const div = document.createElement("div");
+    div.className = "result";
+    div.innerHTML = `
+      <div class="song-title">${song.title} — ${song.artist}</div>
+      <div class="lyrics">“${song.snippet}”</div>
+    `;
+    el.appendChild(div);
+  });
+}
+</script>
+
+</body>
+</html>
