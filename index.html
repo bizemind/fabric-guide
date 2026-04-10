@@ -1,143 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Hindi Song Finder (Demo)</title>
-  <style>
-    body {
-      font-family: system-ui, sans-serif;
-      background: #fafafa;
-      padding: 40px;
-      max-width: 720px;
-      margin: auto;
-    }
-    h1 { font-size: 24px; }
-    input {
-      width: 100%;
-      padding: 14px;
-      font-size: 16px;
-      margin: 12px 0;
-    }
-    button {
-      padding: 12px 18px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .result {
-      background: #fff;
-      padding: 16px;
-      margin-top: 16px;
-      border-radius: 6px;
-    }
-    .song-title {
-      font-weight: 600;
-    }
-    .lyrics {
-      font-size: 14px;
-      color: #444;
-      margin-top: 6px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Fabric Guide — Creatis</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f6f7f9;
+  --surface:#ffffff;
+  --border:#e0e0e0;
+  --text:#1a1a1a;
+  --muted:#888;
+  --faint:#bbb;
+  --chip:#f1f1f1;
+  --radius-sm:8px;
+  --radius-md:12px;
+  --radius-pill:99px;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#111113;
+    --surface:#1c1c1e;
+    --border:#2e2e30;
+    --text:#f0f0f0;
+    --muted:#888;
+    --faint:#555;
+    --chip:#2a2a2c;
+  }
+}
+html{-webkit-text-size-adjust:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0)}
+.app{max-width:560px;margin:0 auto;padding:1.25rem 1rem 3rem}
+.header{display:flex;align-items:baseline;justify-content:center;gap:8px;margin-bottom:1.25rem;width:100%;text-align:center!important}
+.header h1{font-size:20px!important;font-weight:700!important;letter-spacing:-0.3px;text-align:center!important}
+.header span{font-size:13px;color:var(--muted);text-align:center!important}
+
+.filter-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:1rem 1.125rem;margin-bottom:1rem}
+.filter-label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:12px}
+.filter-pills{display:flex;flex-wrap:wrap;gap:6px}
+.filter-pill{font-size:13px;padding:5px 12px;border-radius:var(--radius-pill);background:var(--chip);color:var(--muted);border:1px solid var(--border);cursor:pointer;transition:transform .12s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.filter-pill:hover{transform:scale(1.05)}
+.filter-pill:active{transform:scale(0.95)}
+.filter-pill.active{background:var(--text);color:var(--bg);border-color:var(--text)}
+
+.preview{border-radius:var(--radius-md);height:70px;margin-bottom:1.25rem;border:1px solid var(--border);background:var(--chip);transition:background .25s;display:flex;align-items:center;padding:0 1.125rem}
+.preview-text{font-size:13px;color:var(--muted)}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:1rem 1.125rem;margin-bottom:.75rem}
+.card-header{display:flex;align-items:center;gap:14px}
+.swatch{width:52px;height:52px;flex-shrink:0;border-radius:var(--radius-sm);border:1px solid var(--border);transition:background .25s}
+.fabric-name{font-size:16px;font-weight:600}
+.fabric-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.tag-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.tag{font-size:11px;padding:3px 9px;border-radius:var(--radius-pill);background:var(--chip);border:1px solid var(--border);color:var(--muted)}
+
+.accordion-toggle{margin-top:12px;font-size:13px;font-weight:500;cursor:pointer;color:var(--muted);-webkit-tap-highlight-color:transparent}
+.accordion-toggle:hover{color:var(--text)}
+.accordion-content{margin-top:12px;border-top:1px solid var(--border);padding-top:14px;display:none}
+.accordion-content.open{display:block}
+
+.recipe-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(64px,1fr));gap:8px;margin-bottom:12px}
+.recipe-cell{background:var(--chip);border-radius:var(--radius-sm);padding:10px 8px;text-align:center}
+.recipe-label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint)}
+.recipe-val{font-size:15px;font-weight:600;margin-top:3px;color:var(--text)}
+
+.section-head{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--faint);margin:0 0 6px}
+ul{padding-left:16px;font-size:13px;color:var(--muted)}
+ul li{margin-bottom:3px}
+
+.scale-section{margin-top:12px;border-top:1px solid var(--border);padding-top:14px}
+.scale-row{display:flex;gap:8px;align-items:center}
+.scale-row input{width:90px;padding:8px 10px;font-size:14px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);-webkit-appearance:none;appearance:none}
+.scale-row input:focus{outline:2px solid #555;outline-offset:1px}
+.scale-row .unit{font-size:13px;color:var(--muted)}
+.btn{padding:8px 14px;font-size:13px;font-weight:500;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.btn:active{opacity:.7}
+.scale-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.scale-pill{font-size:13px;padding:5px 11px;border-radius:var(--radius-pill);background:var(--chip);color:var(--muted);border:1px solid var(--border)}
+.scale-pill strong{font-weight:600;color:var(--text)}
+
+.empty{font-size:14px;color:var(--faint);text-align:center;padding:1.5rem 0}
+</style>
 </head>
 <body>
+<div class="app">
 
-<h1>Hindi Song Finder</h1>
-<p>English phrase → Hindi songs with the same feeling.</p>
+  <div class="header">
+    <h1>Fabric Guide</h1>
+    <span>by Creatis</span>
+  </div>
 
-<input id="query" placeholder="why are you troubling me" />
-<button onclick="searchSongs()">Search</button>
+  <div class="filter-card">
+    <div class="filter-label">Filter by use</div>
+    <div class="filter-pills" id="filters"></div>
+  </div>
 
-<div id="results"></div>
+  <div id="preview" class="preview">
+    <span class="preview-text">Select a fabric to preview</span>
+  </div>
 
+  <div id="grid"></div>
+
+</div>
 <script>
-/* ---------------- FAKE DATABASE ---------------- */
-
-const SONGS = [
+const FABRICS = [
   {
-    title: "Kyun Main Jagoon",
-    artist: "Shankar Mahadevan",
-    snippet: "kyun main jagoon… dard se bhara yeh dil",
-    tags: ["kyun", "dard", "pareshaan", "confusion"]
+    id: "F-001",
+    name: "Cotton Sateen",
+    composition: "100% Cotton",
+    width: "48 in",
+    description: "Exceptionally smooth with a subtle sheen. Quiet luxury for everyday rest.",
+    care: ["Machine wash cold", "Wash inside out", "Do not bleach", "Tumble dry low"],
+    usedIn: ["Clothing", "Bedding", "Yardage"],
+    hex: "#F2EFED"
   },
   {
-    title: "Tadap Tadap",
-    artist: "KK",
-    snippet: "tadap tadap ke is dil se aah nikalti rahi",
-    tags: ["tadap", "pain", "suffering"]
+    id: "F-002",
+    name: "Cotton Cambric",
+    composition: "100% Cotton",
+    width: "44 in",
+    description: "Lightweight and breathable. Smooth to touch, easy drape, wears well across seasons.",
+    care: ["Gentle machine wash", "Mild detergent", "Do not bleach", "Line dry or tumble dry low"],
+    usedIn: ["Table Linen", "Kit"],
+    hex: "#E8DDD0"
   },
   {
-    title: "Bewafa",
-    artist: "Imran Khan",
-    snippet: "bewafa se bhi pyaar hota hai",
-    tags: ["betrayal", "pain", "complaint"]
+    id: "F-003",
+    name: "Linen Blend",
+    composition: "Linen × Cotton",
+    width: "48 in",
+    description: "Breathable, soft, lightly textured. Balances linen ease with cotton smoothness.",
+    care: ["Cold wash recommended", "Mild detergent", "Do not bleach", "Line dry"],
+    usedIn: ["Bedding", "Pillows", "Table Linen", "Yardage"],
+    hex: "#D9CFC2"
   },
   {
-    title: "Tu Jaane Na",
-    artist: "Atif Aslam",
-    snippet: "kaise batayein kyun tujhko chahe",
-    tags: ["kyun", "confusion", "love"]
+    id: "F-004",
+    name: "Cotton Casement",
+    composition: "100% Cotton",
+    width: "48 in",
+    description: "Sturdy medium-weight, dense weave. Structure with flexibility — ideal for carry pieces.",
+    care: ["Gentle machine wash", "Avoid harsh detergents", "Do not bleach", "Line dry"],
+    usedIn: ["Bag"],
+    hex: "#C4B8A8"
   }
 ];
 
-/* -------- INTENT EXTRACTION (ENGLISH) ---------- */
+const FILTERS = ["All", "Clothing", "Bedding", "Table Linen", "Pillows", "Yardage", "Kit", "Bag"];
+let active = "All";
 
-function extractIntent(english) {
-  const text = english.toLowerCase();
+const fEl = document.getElementById("filters");
+FILTERS.forEach(f => {
+  const b = document.createElement("button");
+  b.className = "filter-pill" + (f === "All" ? " active" : "");
+  b.textContent = f;
+  b.onclick = () => setFilter(f, b);
+  fEl.appendChild(b);
+});
 
-  const intents = [];
-
-  if (text.includes("why")) intents.push("kyun");
-  if (text.includes("troubl") || text.includes("bother")) intents.push("pareshaan");
-  if (text.includes("hurt") || text.includes("pain")) intents.push("pain");
-  if (text.includes("suffer")) intents.push("tadap");
-
-  return intents;
+function setFilter(f, btn) {
+  active = f;
+  document.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  render();
 }
 
-/* ------------- FAKE SEARCH ENGINE -------------- */
-
-function fakeSearch(query) {
-  const intents = extractIntent(query);
-
-  return SONGS
-    .map(song => {
-      const score = song.tags.filter(t => intents.includes(t)).length;
-      return { ...song, score };
-    })
-    .filter(song => song.score > 0)
-    .sort((a, b) => b.score - a.score);
-}
-
-/* ------------- UI CONTROLLER ------------------- */
-
-function searchSongs() {
-  const query = document.getElementById("query").value.trim();
-  if (!query) return;
-
-  const results = fakeSearch(query);
-  render(results);
-}
-
-function render(results) {
-  const el = document.getElementById("results");
-  el.innerHTML = "";
-
-  if (!results.length) {
-    el.innerHTML = "No close matches found.";
+function render() {
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  const list = FABRICS.filter(f => active === "All" || f.usedIn.includes(active));
+  if (!list.length) {
+    grid.innerHTML = '<div class="empty">No fabrics match this category.</div>';
     return;
   }
-
-  results.forEach(song => {
-    const div = document.createElement("div");
-    div.className = "result";
-    div.innerHTML = `
-      <div class="song-title">${song.title} — ${song.artist}</div>
-      <div class="lyrics">“${song.snippet}”</div>
+  list.forEach((f, i) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <div class="card-header">
+        <div class="swatch" style="background:${f.hex}"></div>
+        <div>
+          <div class="fabric-name">${f.name}</div>
+          <div class="fabric-sub">${f.id} &nbsp;·&nbsp; ${f.composition}</div>
+          <div class="tag-row">${f.usedIn.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+        </div>
+      </div>
+      <div class="accordion-toggle" onclick="toggleAcc('acc-${i}', this, '${f.hex}', '${f.name}')">View details →</div>
+      <div class="accordion-content" id="acc-${i}">
+        <div class="recipe-grid">
+          <div class="recipe-cell"><div class="recipe-label">Width</div><div class="recipe-val">${f.width}</div></div>
+          <div class="recipe-cell"><div class="recipe-label">Composition</div><div class="recipe-val" style="font-size:12px">${f.composition}</div></div>
+        </div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:12px">${f.description}</p>
+        <div class="section-head">Care</div>
+        <ul>${f.care.map(c => `<li>${c}</li>`).join("")}</ul>
+        <div class="scale-section">
+          <div class="section-head" style="margin-bottom:10px">Scale yardage</div>
+          <div class="scale-row">
+            <input type="number" inputmode="decimal" value="3" id="vol-${i}" step="0.5" min="0.5" />
+            <span class="unit">metres</span>
+            <button class="btn" onclick="doScale(${i})">Scale</button>
+          </div>
+          <div class="scale-pills" id="pills-${i}"></div>
+        </div>
+      </div>
     `;
-    el.appendChild(div);
+    grid.appendChild(card);
   });
 }
-</script>
 
+function toggleAcc(id, btn, hex, name) {
+  const el = document.getElementById(id);
+  const open = el.classList.toggle("open");
+  btn.textContent = open ? "Hide details ↑" : "View details →";
+  if (open) {
+    const preview = document.getElementById("preview");
+    preview.style.background = hex;
+    preview.innerHTML = `<span class="preview-text">${name}</span>`;
+  }
+}
+
+function doScale(i) {
+  const fabric = FABRICS[i];
+  const vol = parseFloat(document.getElementById("vol-" + i).value);
+  if (isNaN(vol) || vol <= 0) return;
+  const widthInches = parseFloat(fabric.width);
+  const items = [
+    { label: "Width", val: widthInches + " in" },
+    { label: "Length", val: vol.toFixed(1) + " m" },
+    { label: "Total area", val: ((widthInches * 0.0254) * vol).toFixed(2) + " m²" }
+  ];
+  document.getElementById("pills-" + i).innerHTML = items
+    .map(it => `<div class="scale-pill">${it.label} <strong>${it.val}</strong></div>`)
+    .join("");
+}
+
+render();
+</script>
 </body>
 </html>
