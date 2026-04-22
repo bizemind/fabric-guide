@@ -32,9 +32,12 @@
 html{-webkit-text-size-adjust:100%}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0)}
 .app{max-width:560px;margin:0 auto;padding:1.25rem 1rem 3rem}
-.header{display:flex;align-items:baseline;justify-content:center;gap:8px;margin-bottom:1.25rem;width:100%;text-align:center!important}
-.header h1{font-size:20px!important;font-weight:700!important;letter-spacing:-0.3px;text-align:center!important}
-.header span{font-size:13px;color:var(--muted);text-align:center!important}
+.header{display:flex;align-items:baseline;justify-content:flex-start;gap:8px;margin-bottom:1.25rem;width:100%}
+.header h1{font-size:20px;font-weight:700;letter-spacing:-0.3px}
+.header span{font-size:13px;color:var(--muted)}
+.signature{margin-top:2.5rem;text-align:center;font-size:12px;color:var(--faint)}
+.signature a{color:var(--faint);text-decoration:none;border-bottom:1px solid var(--border)}
+.signature a:hover{color:var(--muted)}
 
 .filter-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:1rem 1.125rem;margin-bottom:1rem}
 .filter-label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:12px}
@@ -102,6 +105,8 @@ ul li{margin-bottom:3px}
 
   <div id="grid"></div>
 
+  <div class="signature">Built by <a href="https://creatis.in/pages/stack" target="_blank">The Creatis Stack</a></div>
+
 </div>
 <script>
 const FABRICS = [
@@ -142,7 +147,7 @@ const FABRICS = [
     width: "44 in",
     description: "Lightweight and breathable. Smooth to touch, easy drape, wears well across seasons.",
     care: ["Gentle machine wash", "Mild detergent", "Do not bleach", "Line dry or tumble dry low"],
-    usedIn: ["Kit"],
+    usedIn: ["Table Linen", "Kit"],
     hex: "#FFFFFF"
   }
 ];
