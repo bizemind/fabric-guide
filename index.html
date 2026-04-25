@@ -117,7 +117,7 @@ const FABRICS = [
     width: "48 in",
     description: "Exceptionally smooth with a subtle sheen. Quiet luxury for everyday rest.",
     care: ["Machine wash cold", "Wash inside out", "Do not bleach", "Tumble dry low"],
-    usedIn: ["Clothing", "Bedding", "Yardage"],
+    usedIn: ["Clothing", "Yardage"],
     hex: "#FFFFFF"
   },
   {
@@ -127,7 +127,7 @@ const FABRICS = [
     width: "48 in",
     description: "Breathable, soft, lightly textured. Balances linen ease with cotton smoothness.",
     care: ["Cold wash recommended", "Mild detergent", "Do not bleach", "Line dry"],
-    usedIn: ["Bedding", "Pillows", "Table Linen", "Yardage"],
+    usedIn: ["Pillows", "Table Linen", "Yardage"],
     hex: "#FFFFFF"
   },
   {
@@ -149,10 +149,20 @@ const FABRICS = [
     care: ["Gentle machine wash", "Mild detergent", "Do not bleach", "Line dry or tumble dry low"],
     usedIn: ["Table Linen", "Kit"],
     hex: "#FFFFFF"
+  },
+  {
+    id: "F-005",
+    name: "Cotton Poplin",
+    composition: "100% Cotton",
+    width: "44 in",
+    description: "Crisp, lightweight weave with a smooth finish. A wardrobe staple that holds its shape and drapes cleanly.",
+    care: ["Machine wash cold", "Mild detergent", "Do not bleach", "Line dry or tumble dry low"],
+    usedIn: ["Clothing"],
+    hex: "#FFFFFF"
   }
 ];
 
-const FILTERS = ["All", "Clothing", "Bedding", "Table Linen", "Pillows", "Yardage", "Kit", "Bag"];
+const FILTERS = ["All", "Clothing", "Table Linen", "Pillows", "Yardage", "Kit", "Bag"];
 let active = "All";
 
 const fEl = document.getElementById("filters");
