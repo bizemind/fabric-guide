@@ -115,16 +115,18 @@ const FABRICS = [
     name: "Cotton Sateen",
     composition: "100% Cotton",
     width: "48 in",
+    gsm: "",
     description: "Exceptionally smooth with a subtle sheen. Quiet luxury for everyday rest.",
     care: ["Machine wash cold", "Wash inside out", "Do not bleach", "Tumble dry low"],
     usedIn: ["Clothing", "Yardage"],
     hex: "#FFFFFF"
   },
   {
-    id: "F-003",
+    id: "F1037",
     name: "Linen Blend",
     composition: "Linen × Cotton",
     width: "48 in",
+    gsm: "",
     description: "Breathable, soft, lightly textured. Balances linen ease with cotton smoothness.",
     care: ["Cold wash recommended", "Mild detergent", "Do not bleach", "Line dry"],
     usedIn: ["Pillows", "Table Linen", "Yardage"],
@@ -135,34 +137,94 @@ const FABRICS = [
     name: "Cotton Casement",
     composition: "100% Cotton",
     width: "48 in",
+    gsm: "",
     description: "Sturdy medium-weight, dense weave. Structure with flexibility — ideal for carry pieces.",
     care: ["Gentle machine wash", "Avoid harsh detergents", "Do not bleach", "Line dry"],
     usedIn: ["Bag"],
     hex: "#F5F0EB"
   },
   {
-    id: "F-002",
+    id: "F39",
     name: "Cotton Cambric",
     composition: "100% Cotton",
     width: "44 in",
+    gsm: "",
     description: "Lightweight and breathable. Smooth to touch, easy drape, wears well across seasons.",
     care: ["Gentle machine wash", "Mild detergent", "Do not bleach", "Line dry or tumble dry low"],
     usedIn: ["Table Linen", "Kit"],
     hex: "#FFFFFF"
   },
   {
-    id: "F-005",
+    id: "F1356",
     name: "Cotton Poplin",
     composition: "100% Cotton",
     width: "44 in",
+    gsm: "",
     description: "Crisp, lightweight weave with a smooth finish. A wardrobe staple that holds its shape and drapes cleanly.",
     care: ["Machine wash cold", "Mild detergent", "Do not bleach", "Line dry or tumble dry low"],
     usedIn: ["Clothing"],
     hex: "#FFFFFF"
+  },
+  {
+    id: "54001",
+    name: "Linen/Cotton",
+    composition: "Linen × Cotton",
+    width: "48 in",
+    gsm: "",
+    description: "Breathable, soft, lightly textured. Balances linen ease with cotton smoothness.",
+    care: ["Cold wash recommended", "Mild detergent", "Do not bleach", "Line dry"],
+    usedIn: ["Event"],
+    hex: "multicolor"
+  },
+  {
+    id: "54002",
+    name: "Linen/Cotton",
+    composition: "Linen × Cotton",
+    width: "48 in",
+    gsm: "",
+    description: "Breathable, soft, lightly textured. Balances linen ease with cotton smoothness.",
+    care: ["Cold wash recommended", "Mild detergent", "Do not bleach", "Line dry"],
+    usedIn: ["Event"],
+    hex: "multicolor"
+  },
+  {
+    id: "53057",
+    name: "Linen/Cotton",
+    composition: "Linen × Cotton",
+    width: "48 in",
+    gsm: "",
+    description: "Breathable, soft, lightly textured. Balances linen ease with cotton smoothness.",
+    care: ["Cold wash recommended", "Mild detergent", "Do not bleach", "Line dry"],
+    usedIn: ["Event"],
+    hex: "multicolor"
+  },
+  {
+    id: "Organdy",
+    name: "Organdy",
+    composition: "100% Cotton",
+    width: "48 in",
+    gsm: "",
+    description: "Exceptionally smooth with a subtle sheen. Quiet luxury for everyday rest.",
+    care: ["Machine wash cold", "Wash inside out", "Do not bleach", "Tumble dry low"],
+    usedIn: ["Event"],
+    hex: "#FFFFFF",
+    colors: "White"
+  },
+  {
+    id: "Canvas",
+    name: "Canvas",
+    composition: "100% Cotton",
+    width: "48 in",
+    gsm: "",
+    description: "Sturdy medium-weight, dense weave. Structure with flexibility — ideal for carry pieces.",
+    care: ["Gentle machine wash", "Avoid harsh detergents", "Do not bleach", "Line dry"],
+    usedIn: ["Event"],
+    hex: "#F5F0EB",
+    colors: "Natural"
   }
 ];
 
-const FILTERS = ["All", "Clothing", "Table Linen", "Pillows", "Yardage", "Kit", "Bag"];
+const FILTERS = ["All", "Clothing", "Table Linen", "Pillows", "Yardage", "Kit", "Bag", "Event"];
 let active = "All";
 
 const fEl = document.getElementById("filters");
@@ -194,10 +256,10 @@ function render() {
     card.className = "card";
     card.innerHTML = `
       <div class="card-header">
-        <div class="swatch" style="background:${f.hex}"></div>
+        <div class="swatch" style="${f.hex === 'multicolor' ? 'background: linear-gradient(135deg, #e57373, #f48fb1, #ce93d8, #90caf9, #80cbc4, #a5d6a7, #fff176, #ffcc80)' : 'background:' + f.hex}"></div>
         <div>
           <div class="fabric-name">${f.name}</div>
-          <div class="fabric-sub">${f.id} &nbsp;·&nbsp; ${f.composition}</div>
+          <div class="fabric-sub">${f.id} &nbsp;·&nbsp; ${f.composition} &nbsp;·&nbsp; GSM: ${f.gsm || ''}</div>
           <div class="tag-row">${f.usedIn.map(t => `<span class="tag">${t}</span>`).join("")}</div>
         </div>
       </div>
@@ -205,6 +267,7 @@ function render() {
       <div class="accordion-content" id="acc-${i}">
         <div class="recipe-grid">
           <div class="recipe-cell"><div class="recipe-label">Width</div><div class="recipe-val">${f.width}</div></div>
+          <div class="recipe-cell"><div class="recipe-label">GSM</div><div class="recipe-val" style="${f.gsm ? '' : 'color:var(--faint);font-size:12px'}">${f.gsm || '—'}</div></div>
           <div class="recipe-cell"><div class="recipe-label">Composition</div><div class="recipe-val" style="font-size:12px">${f.composition}</div></div>
         </div>
         <p style="font-size:13px;color:var(--muted);margin-bottom:12px">${f.description}</p>
