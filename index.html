@@ -116,7 +116,8 @@ const FABRICS = [
     composition: "100% Cotton",
     width: "48 in",
     gsm: "",
-    description: "Exceptionally smooth with a subtle sheen. Quiet luxury for everyday rest.",
+    colorLabel: "White",
+    description: "Woven tight for a silky finish with a gentle lustre. Cool against the skin, with a drape that feels effortless.",
     care: ["Machine wash cold", "Wash inside out", "Do not bleach", "Tumble dry low"],
     usedIn: ["Clothing", "Yardage"],
     hex: "#FFFFFF"
@@ -127,9 +128,10 @@ const FABRICS = [
     composition: "Linen × Cotton",
     width: "48 in",
     gsm: "",
-    description: "Breathable, soft, lightly textured. Balances linen ease with cotton smoothness.",
+    colorLabel: "White",
+    description: "The ease of linen with the softness of cotton. Breathes well, relaxes into the body, and gets better with every wash.",
     care: ["Cold wash recommended", "Mild detergent", "Do not bleach", "Line dry"],
-    usedIn: ["Pillows", "Table Linen", "Yardage"],
+    usedIn: ["Pillows", "Table Linen", "Yardage", "Event"],
     hex: "#FFFFFF"
   },
   {
@@ -138,9 +140,10 @@ const FABRICS = [
     composition: "100% Cotton",
     width: "48 in",
     gsm: "",
-    description: "Sturdy medium-weight, dense weave. Structure with flexibility — ideal for carry pieces.",
+    colorLabel: "Natural",
+    description: "A firm, close-woven cotton that holds its form without stiffness. Built for pieces that need to work hard and look good doing it.",
     care: ["Gentle machine wash", "Avoid harsh detergents", "Do not bleach", "Line dry"],
-    usedIn: ["Bag"],
+    usedIn: ["Bag", "Event"],
     hex: "#F5F0EB"
   },
   {
@@ -149,7 +152,8 @@ const FABRICS = [
     composition: "100% Cotton",
     width: "44 in",
     gsm: "",
-    description: "Lightweight and breathable. Smooth to touch, easy drape, wears well across seasons.",
+    colorLabel: "White",
+    description: "Finely woven and featherlight. Sits smooth against the skin and layers easily — a reliable everyday fabric.",
     care: ["Gentle machine wash", "Mild detergent", "Do not bleach", "Line dry or tumble dry low"],
     usedIn: ["Kit"],
     hex: "#FFFFFF"
@@ -160,67 +164,71 @@ const FABRICS = [
     composition: "100% Cotton",
     width: "44 in",
     gsm: "",
-    description: "Crisp, lightweight weave with a smooth finish. A wardrobe staple that holds its shape and drapes cleanly.",
+    colorLabel: "White",
+    description: "A classic plain weave with a clean, pressed feel. Structured enough to hold a silhouette, light enough to move with you.",
     care: ["Machine wash cold", "Mild detergent", "Do not bleach", "Line dry or tumble dry low"],
     usedIn: ["Clothing"],
     hex: "#FFFFFF"
   },
   {
     id: "54001",
-    name: "Linen/Cotton",
+    name: "Linen Blend",
     composition: "Linen × Cotton",
     width: "54 in",
     gsm: "",
-    description: "Medium weight, textured. Balances linen ease with cotton smoothness.",
+    colorLabel: "Various Colors",
+    description: "A medium-weight linen-cotton weave with visible texture and natural character. Available in a range of colours for event and bespoke use.",
     care: ["Cold wash recommended", "Mild detergent", "Do not bleach", "Line dry"],
     usedIn: ["Event"],
     hex: "multicolor"
   },
   {
     id: "54002",
-    name: "Linen/Cotton",
+    name: "Linen Blend",
     composition: "Linen × Cotton",
     width: "54 in",
     gsm: "",
-    description: "Medium weight, textured. Balances linen ease with cotton smoothness.",
+    colorLabel: "Various Colors",
+    description: "A medium-weight linen-cotton weave with visible texture and natural character. Available in a range of colours for event and bespoke use.",
     care: ["Cold wash recommended", "Mild detergent", "Do not bleach", "Line dry"],
     usedIn: ["Event"],
     hex: "multicolor"
   },
   {
     id: "53057",
-    name: "Linen/Cotton",
+    name: "Linen Blend",
     composition: "Linen × Cotton",
     width: "54 in",
     gsm: "",
-    description: "Medium weight, textured. Balances linen ease with cotton smoothness.",
+    colorLabel: "Various Colors",
+    description: "A medium-weight linen-cotton weave with visible texture and natural character. Available in a range of colours for event and bespoke use.",
     care: ["Cold wash recommended", "Mild detergent", "Do not bleach", "Line dry"],
     usedIn: ["Event"],
     hex: "multicolor"
   },
   {
-    id: "Organdy",
-    name: "Organdy",
+    id: "F33",
+    name: "Cotton Organdy",
     composition: "100% Cotton",
     width: "44 in",
     gsm: "",
+    colorLabel: "White",
     description: "Sheer, lightweight cotton with a crisp, translucent hand. Holds its structure beautifully — ideal for layered, ethereal looks.",
     care: ["Machine wash cold", "Wash inside out", "Do not bleach", "Tumble dry low"],
     usedIn: ["Event"],
-    hex: "#FFFFFF",
-    colors: "White"
+    hex: "#FFFFFF"
   },
   {
-    id: "Canvas",
-    name: "Canvas",
+    id: "—",
+    name: "Cotton Canvas",
     composition: "100% Cotton",
     width: "48 in",
     gsm: "",
-    description: "Sturdy medium-weight, dense weave. Structure with flexibility — ideal for carry pieces.",
+    colorLabel: "Natural",
+    description: "A heavy, tightly woven cotton with real substance. Takes dye and print well, and stands up to repeated use without losing its shape.",
     care: ["Gentle machine wash", "Avoid harsh detergents", "Do not bleach", "Line dry"],
     usedIn: ["Event"],
-    hex: "#F5F0EB",
-    colors: "Natural"
+    hex: "#F5F0EB"
   }
 ];
 
@@ -256,10 +264,10 @@ function render() {
     card.className = "card";
     card.innerHTML = `
       <div class="card-header">
-        <div class="swatch" style="${f.hex === 'multicolor' ? 'background: linear-gradient(135deg, #e57373, #f48fb1, #ce93d8, #90caf9, #80cbc4, #a5d6a7, #fff176, #ffcc80)' : 'background:' + f.hex}"></div>
+        <div class="swatch" style="${f.hex === 'multicolor' ? 'background: linear-gradient(135deg, #e57373, #f48fb1, #ce93d8, #90caf9, #80cbc4, #a5d6a7, #fff176, #ffcc80)' : 'background:' + f.hex};position:relative;" title="${f.colorLabel}"></div>
         <div>
           <div class="fabric-name">${f.name}</div>
-          <div class="fabric-sub">${f.id} &nbsp;·&nbsp; ${f.composition} &nbsp;·&nbsp; GSM: ${f.gsm || ''}</div>
+          <div class="fabric-sub">${f.id} &nbsp;·&nbsp; ${f.composition}</div>
           <div class="tag-row">${f.usedIn.map(t => `<span class="tag">${t}</span>`).join("")}</div>
         </div>
       </div>
