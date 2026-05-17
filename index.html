@@ -109,6 +109,8 @@ ul li{margin-bottom:3px}
 
 </div>
 <script>
+const TTF_URL = "https://trace-the-fiber.bizemind.com/";
+
 const FABRICS = [
   {
     id: "F-001",
@@ -278,7 +280,8 @@ function render() {
           <div class="recipe-cell"><div class="recipe-label">GSM</div><div class="recipe-val" style="${f.gsm ? '' : 'color:var(--faint);font-size:12px'}">${f.gsm || '—'}</div></div>
           <div class="recipe-cell"><div class="recipe-label">Composition</div><div class="recipe-val" style="font-size:12px">${f.composition}</div></div>
         </div>
-        <p style="font-size:13px;color:var(--muted);margin-bottom:12px">${f.description}</p>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:8px">${f.description}</p>
+        <a href="${TTF_URL}" target="_blank" style="display:inline-block;font-size:12px;color:var(--faint);text-decoration:none;border-bottom:1px solid var(--border);margin-bottom:12px;">Trace the fiber →</a>
         <div class="section-head">Care</div>
         <ul>${f.care.map(c => `<li>${c}</li>`).join("")}</ul>
         <div class="scale-section">
